@@ -1,22 +1,31 @@
 import {Request , Response , Router } from 'express';
+import { UserController } from '../controller/user-controller';
 
 
 export class Routes {
     private _router;
     private _app: any;
+    public userController: UserController;
+    
     constructor(app: any){
         this._router = () => Router();
         this._app = app;
+        this.userController = new UserController();
     }
     get routerMiddleware(): any {
         return this._router(); 
     }
-    public getContacts(): void {
+    public getUsers(): void {
         //this._app.route('/').get()
         console.log('route middleware available ' , this._app.route);
-        this._app.route('/').get((req:Request , res: Response) => {
-            console.log('hot relaoding');
-            res.status(200).send({config:'Routes privately configure .....'});
-        });
+        this._app.route('/').get(this.userController.getUsers);
+        console.log('hot relaoding');
+           
+    }
+
+    public addUser(req: Request , res: Response): void {
+        //this._app.route('/').get()
+        console.log('route middleware available ' , this._app.route);
+        this._app.route('/user').post(this.userController.addUser);
     }
 }

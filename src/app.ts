@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Routes } from './routes/routes';
-
+import * as mongoose from "mongoose"
 export class App {
     public app: express.Application;
     private appRoutes: any;
@@ -14,8 +14,9 @@ export class App {
             bodyParser.urlencoded({extended:false}),
             bodyParser.json(),
         ]);
-        this.appRoutes.getContacts();
-        
+        this.initMongoose();
+        this.appRoutes.getUsers();
+        this.appRoutes.addUser();
     }
 
     /**
@@ -25,5 +26,9 @@ export class App {
         //post form data , JSON or form encoded , can be extended
         this.app.use([... config]);
         console.log('type of configs ... success' , config);
+    }
+    
+    private initMongoose(): void {
+        mongoose.Promise = global.Promise;
     }
 }
