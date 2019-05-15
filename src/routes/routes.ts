@@ -15,7 +15,7 @@ export class Routes {
         //this._app.route('/').get()
         console.log('route middleware available ' , this._app.route);
         this._app.route('/').get((req:Request , res: Response) => {
-            console.log('ayyyyyyyy');
+            console.log('hot relaoding');
             res.status(200).send({config:'Routes privately configure .....'});
         });
     }
